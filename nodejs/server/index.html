@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en_US">
+<head>
+  <title>Product Order</title>
+</head>
+<body>
+<h1>Product Order Example</h1>
+<!-- Botones para ordenar productos -->
+<button onclick="orderProduct('cup')">Order Cup</button>
+<button onclick="orderProduct('shirt')">Order Shirt</button>
+<button onclick="orderProduct('concha')">Order concha</button>
+<hr>
+<h2>Shopping Cart</h2>
+<ul id="cart"></ul>
+
+<script src="main.js"></script>
+<script>
+  function addToCart(item) {
+    // Obtener el elemento del carrito
+    const cart = document.getElementById('cart');
+    // Crear un nuevo elemento de lista y asignarle el texto del item
+    const li = document.createElement('li');
+    li.textContent = item;
+    // Agregar el elemento de lista al carrito
+    cart.appendChild(li);
+  }
+
+  function clearCart() {
+    // Obtener el elemento del carrito y borrar su contenido
+    const cart = document.getElementById('cart');
+    cart.innerHTML = '';
+  }
+
+  function orderProduct(product) {
+    // Realizar la solicitud de orden del producto
+    orderProductRequest(product)
+      .then((response) => {
+        console.log('Response fulfilled');
+        console.log(response);
+        // Agregar el producto al carrito
+        addToCart(response);
+        return processOrder(response);
+      })
+      .then((filledResponse) => {
+        console.log(filledResponse);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+</script>
+</body>
+</html>
